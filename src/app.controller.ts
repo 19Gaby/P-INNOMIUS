@@ -1,10 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
+import { HelloDto } from './hello.dto'; // Importa el DTO
 
-@Controller()
-export class AppController {
+@Controller('hello')
+export class HelloController {
   @Get()
-  getHello(): string {
-    return 'Hello World!';
+  getHello(@Query() query: HelloDto): string {
+    const message = query.message || 'Hello, World!';
+    const name = query.name ? `, ${query.name}!` : '!';
+
+    return `${message}${name}`;
   }
 }
-
